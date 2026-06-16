@@ -1,0 +1,1 @@
+global-tt-hotspots
