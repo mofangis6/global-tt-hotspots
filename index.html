@@ -1,0 +1,2339 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TT最新爆款分析</title>
+  <style>
+    :root {
+      --bg: #eaf1f8;
+      --panel: #ffffff;
+      --ink: #172233;
+      --muted: #66778f;
+      --line: #d6e1ec;
+      --brand: #1f4f73;
+      --brand-dark: #102d49;
+      --brand-soft: #dbe9f5;
+      --accent: #2f7ea8;
+      --accent-soft: #e4f0f8;
+      --shadow: 0 20px 54px rgba(15, 35, 60, 0.12);
+      --soft-shadow: 0 12px 30px rgba(22, 43, 70, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, #edf5fb 0, #e8f0f7 360px, #f5f8fb 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+    }
+
+    .hero {
+      color: #fff;
+      min-height: 0;
+      aspect-ratio: 2804 / 561;
+      background: url("./assets/cover-tt-beta.jpg");
+      background-position: center;
+      background-size: cover;
+    }
+
+    .hero-inner {
+      display: none;
+      min-height: 360px;
+      flex-direction: column;
+      width: min(1500px, calc(100% - 64px));
+      margin: 0 auto;
+      padding: 30px 0 48px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 0;
+      min-height: 46px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(255, 255, 255, 0.96);
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    }
+
+    .nav-meta {
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 14px;
+    }
+
+    .hero-copy {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 980px;
+      padding-bottom: 14px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      margin-bottom: 18px;
+      padding: 8px 12px;
+      border: 1px solid rgba(216, 231, 246, 0.28);
+      border-radius: 8px;
+      color: #e5f3ff;
+      background: rgba(11, 34, 58, 0.38);
+      font-size: 18px;
+      font-weight: 900;
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      max-width: 960px;
+      margin: 0;
+      font-size: clamp(42px, 6vw, 86px);
+      line-height: 1.06;
+      letter-spacing: 0;
+      text-shadow: 0 14px 36px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-copy p {
+      max-width: 680px;
+      margin: 18px 0 0;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 18px;
+    }
+
+    .hero-warning {
+      margin: 24px 0 0;
+      color: #ff4d5e;
+      font-size: 18px;
+      font-weight: 900;
+      line-height: 1.45;
+      text-shadow: 0 10px 28px rgba(0, 0, 0, 0.36);
+    }
+
+    .stats {
+      display: none;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      width: min(1180px, calc(100% - 40px));
+      margin: -34px auto 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .stat {
+      min-height: 102px;
+      padding: 20px;
+      border: 1px solid rgba(226, 232, 240, 0.85);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 32px;
+      line-height: 1.15;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .content {
+      width: min(1600px, calc(100% - 40px));
+      margin: 28px auto 70px;
+    }
+
+    @media (min-width: 1024px) {
+      .content {
+        transform: scale(0.8);
+        transform-origin: top center;
+      }
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(240px, 1fr) 170px 180px 170px;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding: 12px;
+      border: 1px solid rgba(214, 225, 236, 0.78);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.76);
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .field {
+      position: relative;
+    }
+
+    .field svg {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      width: 18px;
+      height: 18px;
+      color: #94a3b8;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .search,
+    .select {
+      width: 100%;
+      height: 46px;
+      border: 1px solid #d4e0ec;
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.92);
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .search {
+      padding: 0 14px 0 40px;
+    }
+
+    .select {
+      padding: 0 12px;
+    }
+
+    .search:focus,
+    .select:focus {
+      border-color: var(--brand);
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(47, 126, 168, 0.14);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .trend-summary {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 18px;
+      padding: 24px;
+      border: 1px solid rgba(214, 225, 236, 0.9);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .trend-summary h2 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.25;
+    }
+
+    .trend-summary h2::before,
+    .day-filter-head h2::before,
+    .region-filter-panel h2::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 22px;
+      margin-right: 10px;
+      border-radius: 999px;
+      vertical-align: -3px;
+      background: linear-gradient(180deg, #2f7ea8, #173b5d);
+    }
+
+    .day-filter-panel {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding: 24px;
+      border: 1px solid rgba(214, 225, 236, 0.9);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(241, 247, 252, 0.84));
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .day-filter-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .day-filter-title-group {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .day-filter-title-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .day-filter-head h2 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.25;
+    }
+
+    .page-warning {
+      color: #ff4d5e;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+
+    .feedback-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 18px;
+      border: 1px solid #bae6fd;
+      border-radius: 999px;
+      background: #f0f9ff;
+      color: #0f6f9f;
+      font-size: 15px;
+      font-weight: 860;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 10px 24px rgba(56, 189, 248, 0.12);
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .feedback-link:hover {
+      transform: translateY(-1px);
+      border-color: #7dd3fc;
+      background: #e0f2fe;
+      box-shadow: 0 14px 28px rgba(56, 189, 248, 0.18);
+    }
+
+    .day-filter-head p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .day-tabs {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .day-chip {
+      display: grid;
+      gap: 5px;
+      min-width: 240px;
+      padding: 18px 20px;
+      border: 1px solid #d3dfeb;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.88);
+      text-align: left;
+      box-shadow: 0 10px 24px rgba(31, 79, 115, 0.06);
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .day-chip strong {
+      font-size: 24px;
+      line-height: 1.1;
+    }
+
+    .day-chip span {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .day-chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(31, 79, 115, 0.36);
+      background: #f7fbff;
+      box-shadow: 0 14px 28px rgba(31, 79, 115, 0.1);
+    }
+
+    .day-chip.is-active {
+      border-color: var(--brand);
+      color: #fff;
+      background: linear-gradient(135deg, #153956, #245b7f);
+      box-shadow: 0 16px 34px rgba(24, 52, 79, 0.22);
+    }
+
+    .day-chip.is-active span {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .region-chips {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .region-filter-panel {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding: 22px 24px;
+      border: 1px solid rgba(214, 225, 236, 0.9);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .region-filter-panel h2 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .region-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 8px 18px;
+      border: 1px solid #ccdae7;
+      border-radius: 8px;
+      cursor: pointer;
+      color: var(--brand-dark);
+      background: #e7f0f8;
+      font-size: 15px;
+      font-weight: 800;
+      transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+    }
+
+    .region-chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(31, 79, 115, 0.42);
+      background: #d8e8f5;
+    }
+
+    .region-chip.is-active {
+      color: #fff;
+      border-color: var(--brand);
+      background: linear-gradient(135deg, #163b5c, #28688f);
+    }
+
+    .trend-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .trend-item {
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid #dfe8f1;
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(247, 251, 255, 0.9));
+      box-shadow: 0 10px 24px rgba(31, 79, 115, 0.05);
+    }
+
+    .trend-item strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--brand-dark);
+      font-size: 16px;
+    }
+
+    .trend-keywords {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin: 0 0 10px;
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .trend-keywords b {
+      color: #1d6f9f;
+      font-weight: 900;
+    }
+
+    .trend-keyword {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #0f4d73;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .trend-item p {
+      margin: 0;
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.72;
+      max-height: 168px;
+      overflow: auto;
+      overflow-wrap: anywhere;
+      scrollbar-width: thin;
+      scrollbar-color: #b4c6d7 transparent;
+    }
+
+    .trend-item p::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .trend-item p::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: #b4c6d7;
+    }
+
+    .trend-item .region-name {
+      color: var(--accent);
+    }
+
+    .list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      overflow: hidden;
+      border: 1px solid rgba(203, 216, 229, 0.92);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 16px 38px rgba(20, 45, 72, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(47, 126, 168, 0.38);
+      box-shadow: 0 24px 48px rgba(20, 45, 72, 0.14);
+    }
+
+    .feed-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+
+    .info-panel {
+      min-width: 0;
+    }
+
+    .card-head {
+      display: none;
+      grid-template-columns: 40px minmax(0, 1fr);
+      column-gap: 10px;
+      row-gap: 8px;
+      padding: 12px 12px 10px;
+      border-bottom: 1px solid #edf2f7;
+      align-items: start;
+    }
+
+    .rank {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      border-radius: 8px;
+      color: var(--brand-dark);
+      background: var(--brand-soft);
+      font-weight: 900;
+    }
+
+    .title-wrap {
+      min-width: 0;
+    }
+
+    .category {
+      margin-bottom: 2px;
+      color: var(--brand);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .card h2 {
+      margin: 0;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      font-size: 16px;
+      line-height: 1.35;
+      letter-spacing: 0;
+      max-width: 780px;
+    }
+
+    .metrics {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      grid-column: 1 / -1;
+      justify-content: flex-start;
+      min-width: 0;
+    }
+
+    .metric {
+      padding: 4px 7px;
+      border-radius: 8px;
+      background: #f8fafc;
+      color: #475569;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .card-body {
+      padding: 13px 14px 14px;
+      background:
+        linear-gradient(180deg, #ffffff, #fbfdff);
+    }
+
+    .tags {
+      display: none;
+      gap: 6px;
+      flex-wrap: wrap;
+      max-height: 28px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      color: #075985;
+      background: #e0f2fe;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .analysis {
+      display: none;
+      max-height: 132px;
+      overflow: auto;
+      margin: 0 0 12px;
+      padding: 10px 11px;
+      border: 1px solid #dbe5ef;
+      border-radius: 8px;
+      color: #334155;
+      background: #f8fbff;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .analysis::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .analysis::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      background: #adc0d2;
+    }
+
+    .analysis strong {
+      color: var(--brand-dark);
+    }
+
+    .caption {
+      display: none;
+      margin: 0;
+      padding: 13px 14px;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      color: #475569;
+      background: var(--accent-soft);
+      word-break: break-word;
+    }
+
+    .caption strong {
+      color: #9a3412;
+    }
+
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex: 1 1 120px;
+      min-height: 38px;
+      padding: 0 10px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 800;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, #173b5d, #28698e);
+      box-shadow: 0 10px 22px rgba(31, 79, 115, 0.2);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      background: linear-gradient(135deg, #102d49, #1f5b82);
+    }
+
+    .btn-ghost {
+      color: #334155;
+      background: #fff;
+      border-color: var(--line);
+    }
+
+    .btn-ghost:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+      transform: translateY(-1px);
+    }
+
+    .video-panel {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      order: -1;
+      position: relative;
+      padding: 0;
+      border-bottom: 1px solid var(--line);
+      border-left: 0;
+      background: #08111f;
+    }
+
+    .video-frame {
+      display: grid;
+      width: 100%;
+      min-height: 760px;
+      place-items: center;
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0)),
+        #08111f;
+    }
+
+    .video-frame::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+    }
+
+    .tiktok-iframe {
+      width: 100%;
+      height: 760px;
+      border: 0;
+      background: #08111f;
+    }
+
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 14px 14px 18px;
+      color: #f8fafc;
+      background:
+        linear-gradient(180deg, rgba(4, 12, 24, 0.96), rgba(5, 21, 37, 0.76) 48%, rgba(6, 15, 29, 0.34)),
+        linear-gradient(135deg, rgba(47, 126, 168, 0.2), transparent 42%);
+    }
+
+    .video-overlay::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.2);
+      pointer-events: none;
+    }
+
+    .overlay-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 9px;
+      align-content: start;
+      min-height: 0;
+      max-height: none;
+    }
+
+    .overlay-kicker {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      color: #cfe3f5;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .overlay-rank {
+      display: inline-grid;
+      min-width: 34px;
+      height: 30px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+      backdrop-filter: blur(8px);
+    }
+
+    .overlay-title {
+      margin: 0;
+      color: #fff;
+      font-size: 19px;
+      line-height: 1.35;
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .overlay-metrics,
+    .overlay-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .overlay-pill {
+      padding: 4px 8px;
+      border-radius: 999px;
+      color: #dbeafe;
+      background: rgba(219, 234, 254, 0.16);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .overlay-analysis {
+      max-height: none;
+      min-height: 0;
+      overflow: visible;
+      padding: 12px;
+      border: 1px solid rgba(190, 215, 239, 0.2);
+      border-radius: 8px;
+      color: #dce8f3;
+      background: rgba(8, 20, 36, 0.72);
+      font-size: 12px;
+      line-height: 1.68;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .overlay-hint {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-areas:
+        "logo"
+        "text";
+      justify-items: center;
+      gap: 10px;
+      margin: auto 0 62px;
+      padding: 0 2px 4px;
+      border: 0;
+      border-radius: 0;
+      color: rgba(226, 241, 255, 0.86);
+      background: transparent;
+      box-shadow: none;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0;
+      text-align: center;
+    }
+
+    .overlay-hint img {
+      display: block;
+      grid-area: logo;
+      align-self: center;
+      justify-self: center;
+      width: min(82%, 310px);
+      height: auto;
+      opacity: 0.085;
+      filter: saturate(0.9) contrast(1.08);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .overlay-play-mark {
+      position: relative;
+      grid-area: logo;
+      align-self: center;
+      justify-self: center;
+      z-index: 2;
+      display: grid;
+      width: 58px;
+      height: 58px;
+      place-items: center;
+      margin: 0;
+      transform: translateY(-106px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 50%;
+      color: rgba(255, 255, 255, 0.66);
+      background:
+        radial-gradient(circle at 38% 34%, rgba(255, 255, 255, 0.16), transparent 42%),
+        rgba(5, 8, 14, 0.5);
+      box-shadow:
+        -5px -4px 22px rgba(34, 211, 238, 0.2),
+        5px 4px 22px rgba(255, 42, 109, 0.16),
+        0 18px 42px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(5px);
+    }
+
+    .overlay-play-mark::before {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 35%, rgba(34, 211, 238, 0.16), transparent 42%),
+        radial-gradient(circle at 65% 65%, rgba(255, 42, 109, 0.13), transparent 44%);
+      filter: blur(4px);
+      pointer-events: none;
+    }
+
+    .overlay-play-mark svg {
+      position: relative;
+      z-index: 1;
+      width: 25px;
+      height: 25px;
+      margin-left: 1px;
+      fill: currentColor;
+      filter:
+        drop-shadow(-2px -1px 0 rgba(34, 211, 238, 0.72))
+        drop-shadow(2px 1px 0 rgba(255, 42, 109, 0.6))
+        drop-shadow(0 0 14px rgba(255, 255, 255, 0.18));
+    }
+
+    .overlay-hint span {
+      grid-area: text;
+      align-self: end;
+      position: relative;
+      z-index: 2;
+      color: #67e8f9;
+      opacity: 0.92;
+      text-shadow: 0 0 18px rgba(34, 211, 238, 0.28);
+    }
+
+    .feed-card.is-playing .video-overlay {
+      display: none;
+    }
+
+    .feed-card.is-playing .video-frame::after {
+      display: none;
+    }
+
+    .replay-button {
+      display: none;
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      z-index: 4;
+      align-items: center;
+      justify-content: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      color: rgba(255, 255, 255, 0.92);
+      background: rgba(8, 14, 24, 0.72);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .replay-button:hover {
+      border-color: rgba(34, 211, 238, 0.45);
+      color: #67e8f9;
+      background: rgba(8, 20, 36, 0.86);
+    }
+
+    .feed-card.is-playing .replay-button {
+      display: inline-flex;
+    }
+
+    .video-fallback {
+      display: grid;
+      gap: 14px;
+      width: 100%;
+      padding: 28px 20px;
+      color: #e2e8f0;
+      text-align: center;
+    }
+
+    .video-fallback strong {
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .video-fallback p {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .video-fallback .btn {
+      justify-self: center;
+    }
+
+    .side {
+      display: none;
+      gap: 14px;
+      position: sticky;
+      top: 16px;
+    }
+
+    .panel {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+    }
+
+    .panel h3 {
+      margin: 0 0 12px;
+      font-size: 17px;
+      line-height: 1.3;
+    }
+
+    .insight-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      color: #475569;
+      font-size: 14px;
+    }
+
+    .insight-list li {
+      padding-left: 14px;
+      border-left: 3px solid var(--brand-soft);
+    }
+
+    .empty {
+      display: none;
+      padding: 34px;
+      border: 1px dashed #cbd5e1;
+      border-radius: 8px;
+      color: var(--muted);
+      text-align: center;
+      background: rgba(255, 255, 255, 0.82);
+      box-shadow: var(--soft-shadow);
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      padding: 11px 14px;
+      border-radius: 8px;
+      color: #fff;
+      background: #0f172a;
+      box-shadow: var(--shadow);
+      transition: 0.2s ease;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 980px) {
+      .toolbar,
+      .layout,
+      .trend-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .side {
+        position: static;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .list {
+        grid-template-columns: 1fr;
+      }
+
+      .feed-card {
+        grid-template-columns: 1fr;
+      }
+
+      .video-panel {
+        border-top: 0;
+        border-left: 0;
+      }
+
+      .video-frame {
+        min-height: 660px;
+      }
+
+      .tiktok-iframe {
+        height: 660px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-inner,
+      .stats,
+      .content {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .hero-inner {
+        padding-top: 24px;
+      }
+
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+        margin-bottom: 34px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .card-head {
+        grid-template-columns: 44px minmax(0, 1fr);
+      }
+
+      .rank {
+        width: 44px;
+        height: 44px;
+      }
+
+      .metrics {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        min-width: 0;
+      }
+
+      .card h2 {
+        font-size: 19px;
+      }
+    }
+
+    /* Visual direction aligned with the dark TikTok video wall reference page. */
+    :root {
+      color-scheme: dark;
+      --bg: #08090b;
+      --panel: #111318;
+      --panel-2: #171b22;
+      --panel-3: #0d1015;
+      --ink: #f4f7fb;
+      --muted: #9aa5b1;
+      --soft: #c8d0d9;
+      --line: rgba(255, 255, 255, 0.1);
+      --brand: #22d3ee;
+      --brand-dark: #67e8f9;
+      --brand-soft: rgba(34, 211, 238, 0.1);
+      --accent: #bef264;
+      --accent-soft: rgba(190, 242, 100, 0.1);
+      --shadow: 0 20px 55px rgba(0, 0, 0, 0.36);
+      --soft-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 18% -8%, rgba(34, 211, 238, 0.16), transparent 28rem),
+        radial-gradient(circle at 92% 10%, rgba(190, 242, 100, 0.08), transparent 24rem),
+        linear-gradient(180deg, #0d1117 0%, var(--bg) 46rem);
+      color: var(--ink);
+    }
+
+    .hero {
+      min-height: 0;
+      border-bottom: 1px solid var(--line);
+      background: url("./assets/cover-tt-beta.jpg");
+      background-position: center;
+      background-size: cover;
+    }
+
+    .hero-inner,
+    .content {
+      width: min(1760px, calc(100% - clamp(24px, 2.6vw, 56px)));
+    }
+
+    .hero-inner {
+      display: none;
+      min-height: 390px;
+      padding: 40px 0 42px;
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 780;
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.06);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--soft);
+      backdrop-filter: none;
+      font-size: 22px;
+      font-weight: 780;
+    }
+
+    h1 {
+      max-width: 980px;
+      font-size: clamp(42px, 6vw, 80px);
+      font-weight: 820;
+      line-height: 1.03;
+    }
+
+    .content {
+      margin: 0 auto 72px;
+      padding-top: 28px;
+    }
+
+    @media (min-width: 1024px) {
+      .content {
+        transform: none;
+      }
+    }
+
+    .day-filter-panel,
+    .trend-summary,
+    .region-filter-panel,
+    .toolbar,
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(17, 19, 24, 0.72);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .day-filter-panel,
+    .trend-summary,
+    .region-filter-panel {
+      padding: 24px 26px;
+    }
+
+    .trend-summary h2,
+    .day-filter-head h2,
+    .region-filter-panel h2 {
+      color: var(--ink);
+      font-weight: 760;
+    }
+
+    .trend-summary h2::before,
+    .day-filter-head h2::before,
+    .region-filter-panel h2::before {
+      width: 36px;
+      height: 3px;
+      margin-right: 10px;
+      border-radius: 999px;
+      vertical-align: 7px;
+      background: linear-gradient(90deg, var(--brand), var(--accent));
+    }
+
+    .day-filter-head p {
+      color: var(--muted);
+    }
+
+    .day-chip,
+    .region-chip,
+    .search,
+    .select {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--soft);
+      box-shadow: none;
+    }
+
+    .day-chip:hover,
+    .region-chip:hover {
+      border-color: rgba(34, 211, 238, 0.42);
+      background: rgba(34, 211, 238, 0.08);
+      color: var(--ink);
+    }
+
+    .day-chip.is-active,
+    .region-chip.is-active {
+      border-color: transparent;
+      color: #061014;
+      background: linear-gradient(135deg, var(--brand), #a7f3d0);
+      box-shadow: 0 14px 28px rgba(34, 211, 238, 0.18);
+    }
+
+    .day-chip.is-active span {
+      color: rgba(6, 16, 20, 0.76);
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      margin-bottom: 22px;
+      background: rgba(8, 9, 11, 0.82);
+    }
+
+    .search:focus,
+    .select:focus {
+      border-color: rgba(34, 211, 238, 0.68);
+      background: #0e1116;
+      box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.11);
+    }
+
+    .field svg {
+      color: var(--muted);
+    }
+
+    .trend-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .trend-item {
+      border: 1px solid var(--line);
+      background: rgba(13, 16, 21, 0.72);
+      box-shadow: none;
+    }
+
+    .trend-item strong {
+      color: var(--ink);
+    }
+
+    .trend-item .region-name {
+      color: var(--brand);
+    }
+
+    .trend-item p {
+      color: var(--soft);
+    }
+
+    .card {
+      background: linear-gradient(180deg, var(--panel-2), var(--panel));
+      box-shadow: var(--shadow);
+    }
+
+    .card:hover {
+      border-color: rgba(34, 211, 238, 0.28);
+      box-shadow: 0 24px 62px rgba(0, 0, 0, 0.46);
+    }
+
+    .video-panel,
+    .video-frame,
+    .tiktok-iframe {
+      background: #000;
+    }
+
+    .video-frame {
+      min-height: 760px;
+    }
+
+    .tiktok-iframe {
+      height: 760px;
+    }
+
+    .video-overlay {
+      padding: 16px;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.58) 68%, rgba(0, 0, 0, 0.82)),
+        radial-gradient(circle at 50% 28%, rgba(34, 211, 238, 0.14), transparent 34%);
+    }
+
+    .overlay-content {
+      max-height: none;
+    }
+
+    .overlay-kicker,
+    .overlay-title {
+      color: var(--ink);
+    }
+
+    .overlay-rank {
+      border-color: rgba(34, 211, 238, 0.45);
+      color: var(--brand);
+      background: rgba(34, 211, 238, 0.08);
+    }
+
+    .overlay-pill {
+      color: #c8f7ff;
+      background: rgba(34, 211, 238, 0.1);
+    }
+
+    .overlay-analysis {
+      border-color: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.035);
+      color: #b9c3cf;
+    }
+
+    .overlay-hint {
+      color: #67e8f9;
+      font-size: 11px;
+    }
+
+    .card-body {
+      padding: 10px;
+      background: var(--panel);
+    }
+
+    .btn {
+      min-height: 36px;
+      border-radius: 8px;
+    }
+
+    .btn-primary {
+      color: #061014;
+      background: linear-gradient(135deg, var(--brand), #a7f3d0);
+      box-shadow: none;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #67e8f9, var(--accent));
+    }
+
+    .btn-ghost {
+      color: var(--soft);
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .btn-ghost:hover {
+      color: var(--ink);
+      border-color: rgba(34, 211, 238, 0.38);
+      background: rgba(34, 211, 238, 0.08);
+    }
+
+    .toast,
+    .empty {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--soft);
+    }
+
+    @media (max-width: 980px) {
+      .trend-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-inner,
+      .content {
+        width: min(100% - 24px, 1520px);
+      }
+
+      .video-frame {
+        min-height: 760px;
+      }
+
+      .tiktok-iframe {
+        height: 760px;
+      }
+    }
+
+    /* Light variant: keep the reference page structure, but use a white workspace. */
+    :root {
+      color-scheme: light;
+      --bg: #ffffff;
+      --panel: #ffffff;
+      --panel-2: #f8fafc;
+      --panel-3: #f1f5f9;
+      --ink: #172233;
+      --muted: #66778f;
+      --soft: #334155;
+      --line: rgba(15, 35, 60, 0.12);
+      --brand: #7dd3fc;
+      --brand-dark: #1d6f9f;
+      --brand-soft: #e0f2fe;
+      --accent: #38bdf8;
+      --accent-soft: #edf8ff;
+      --shadow: 0 20px 55px rgba(15, 35, 60, 0.1);
+      --soft-shadow: 0 14px 34px rgba(15, 35, 60, 0.07);
+    }
+
+    body {
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .content {
+      background: #fff;
+    }
+
+    .day-filter-panel,
+    .trend-summary,
+    .region-filter-panel,
+    .toolbar,
+    .card {
+      border-color: #d9e3ed;
+      background: #fff;
+      box-shadow: var(--soft-shadow);
+      backdrop-filter: none;
+    }
+
+    .toolbar {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(18px);
+    }
+
+    .day-chip,
+    .region-chip,
+    .search,
+    .select {
+      border-color: #d7e2ed;
+      background: #f8fafc;
+      color: var(--ink);
+    }
+
+    .search:focus,
+    .select:focus {
+      background: #fff;
+      border-color: rgba(56, 189, 248, 0.58);
+      box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.18);
+    }
+
+    .day-chip:hover,
+    .region-chip:hover {
+      border-color: rgba(56, 189, 248, 0.46);
+      background: #f0f9ff;
+      color: var(--ink);
+    }
+
+    .day-chip.is-active,
+    .region-chip.is-active {
+      color: #fff;
+      border-color: #38bdf8;
+      background: linear-gradient(135deg, #38bdf8, #1d6f9f);
+      box-shadow: 0 14px 28px rgba(56, 189, 248, 0.2);
+    }
+
+    .day-chip.is-active span {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .trend-item {
+      border-color: #dbe5ee;
+      background: #f8fafc;
+    }
+
+    .trend-item strong {
+      color: var(--ink);
+    }
+
+    .trend-item p {
+      color: #475569;
+    }
+
+    .card {
+      background: #fff;
+    }
+
+    .card:hover {
+      border-color: rgba(56, 189, 248, 0.34);
+      box-shadow: 0 24px 52px rgba(15, 35, 60, 0.13);
+    }
+
+    .card-body {
+      background: #fff;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, #38bdf8, #1d6f9f);
+      box-shadow: 0 10px 22px rgba(56, 189, 248, 0.2);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #0ea5e9, #155e88);
+    }
+
+    .btn-ghost {
+      color: #132234;
+      border-color: rgba(125, 211, 252, 0.55);
+      background: #fff;
+    }
+
+    .btn-ghost:hover {
+      color: var(--ink);
+      border-color: rgba(56, 189, 248, 0.45);
+      background: #f0f9ff;
+    }
+
+    .toast,
+    .empty {
+      background: #fff;
+      color: var(--muted);
+      border-color: #d7e2ed;
+    }
+
+    .hero,
+    .hero .brand,
+    .hero h1 {
+      color: #fff;
+    }
+
+    .hero .eyebrow {
+      color: #d8e7f6;
+    }
+
+    .hero .nav-meta,
+    .hero-copy p {
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .video-overlay,
+    .video-overlay .overlay-kicker,
+    .video-overlay .overlay-title {
+      color: #f4f7fb;
+    }
+
+    .video-overlay .overlay-rank {
+      color: #67e8f9;
+    }
+
+    .video-overlay .overlay-pill {
+      color: #d9f8ff;
+      background: rgba(34, 211, 238, 0.12);
+    }
+
+    .video-overlay .overlay-analysis {
+      color: #d8e2ec;
+      background: rgba(8, 14, 24, 0.74);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .video-overlay .overlay-analysis strong {
+      color: #f4f7fb;
+    }
+
+    .video-overlay .overlay-hint {
+      color: #67e8f9;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="hero">
+      <div class="hero-inner">
+        <nav class="nav" aria-label="页面信息">
+          <div class="brand">
+            <span class="brand-mark" aria-hidden="true">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+                <path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z" stroke="currentColor" stroke-width="2" />
+                <path d="m8.5 12 2.3 2.3 4.8-5.2" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+            <span id="brandTitle">魔方-TT最新爆款分析Beta</span>
+          </div>
+          <div class="nav-meta" id="navMeta"></div>
+        </nav>
+
+        <section class="hero-copy">
+          <div class="eyebrow" id="heroEyebrow"></div>
+          <h1 id="heroTitle">TT最新爆款分析</h1>
+          <p id="heroDescription"></p>
+        </section>
+      </div>
+    </header>
+
+    <section class="stats" aria-label="数据概览">
+      <div class="stat">
+        <strong id="statTotal">0</strong>
+        <span id="statTotalLabel">收录素材</span>
+      </div>
+      <div class="stat">
+        <strong id="statLikes">0</strong>
+        <span id="statLikesLabel">累计点赞</span>
+      </div>
+      <div class="stat">
+        <strong id="statTop">0</strong>
+        <span id="statTopLabel">最高单条点赞</span>
+      </div>
+      <div class="stat">
+        <strong id="statDate">-</strong>
+        <span id="statRegionLabel">覆盖区域</span>
+      </div>
+    </section>
+
+    <main class="content">
+      <section class="day-filter-panel" aria-label="周选择">
+        <div class="day-filter-head">
+          <div class="day-filter-title-group">
+            <div class="day-filter-title-row">
+              <h2 id="daySectionTitle">按周选择热点</h2>
+              <div class="page-warning">部分视频由于 TT 权限原因需点开页面观看。Beta 版本可能有轻微 bug，可以随时联系我们。</div>
+            </div>
+            <p id="dayMeta">选择周期查看对应热点、区域趋势和视频素材流。</p>
+          </div>
+          <a class="feedback-link" href="https://micoworld.feishu.cn/share/base/form/shrcncmbzhyKqDq3v5JeuG3PCxg" target="_blank" rel="noopener noreferrer">建议反馈</a>
+        </div>
+        <div id="dayTabs" class="day-tabs"></div>
+      </section>
+
+      <section class="trend-summary" aria-label="趋势总结">
+        <h2 id="summaryTitle">区域趋势总结</h2>
+        <div id="trendGrid" class="trend-grid"></div>
+      </section>
+
+      <section class="region-filter-panel" aria-label="地区筛选">
+        <h2 id="regionSectionTitle">地区筛选</h2>
+        <div id="regionChips" class="region-chips"></div>
+      </section>
+
+      <section class="toolbar" aria-label="筛选工具">
+        <label class="field">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="m21 21-4.3-4.3m1.3-5.2a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <input id="searchInput" class="search" type="search" placeholder="搜索主题、标签、原文、分析..." />
+        </label>
+
+        <select id="categorySelect" class="select" aria-label="类型筛选">
+          <option value="all">全部类型</option>
+        </select>
+
+        <select id="sortSelect" class="select" aria-label="排序方式">
+          <option value="likes-desc">点赞数从高到低</option>
+          <option value="date-desc">发布时间从新到旧</option>
+          <option value="rank-asc">编号从小到大</option>
+        </select>
+
+        <select id="tagSelect" class="select" aria-label="标签筛选">
+          <option value="all">全部标签</option>
+        </select>
+      </section>
+
+      <section class="layout">
+        <div>
+          <div id="cardList" class="list" aria-live="polite"></div>
+          <div id="emptyState" class="empty">没有找到匹配的素材，换个关键词或筛选条件试试。</div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status">已复制链接</div>
+
+  <template id="cardTemplate">
+    <article class="card feed-card">
+      <div class="info-panel">
+        <div class="card-head">
+          <div class="rank"></div>
+          <div class="title-wrap">
+            <div class="category"></div>
+            <h2></h2>
+          </div>
+          <div class="metrics"></div>
+        </div>
+        <div class="card-body">
+          <div class="tags"></div>
+          <p class="analysis"></p>
+          <p class="caption"></p>
+          <div class="actions"></div>
+        </div>
+      </div>
+      <div class="video-panel">
+        <div class="video-frame"></div>
+      </div>
+    </article>
+  </template>
+
+  <script src="./data.js"></script>
+  <script>
+    const pageMeta = window.TT_PAGE_META || {};
+    const reportDays = window.TT_HOTSPOT_DATA || [];
+
+    let activeDayId = reportDays[0] ? reportDays[0].id : "";
+    let selectedRegion = "all";
+
+    const els = {
+      dayTabs: document.querySelector("#dayTabs"),
+      dayMeta: document.querySelector("#dayMeta"),
+      search: document.querySelector("#searchInput"),
+      category: document.querySelector("#categorySelect"),
+      tag: document.querySelector("#tagSelect"),
+      sort: document.querySelector("#sortSelect"),
+      list: document.querySelector("#cardList"),
+      empty: document.querySelector("#emptyState"),
+      template: document.querySelector("#cardTemplate"),
+      toast: document.querySelector("#toast"),
+      summaryTitle: document.querySelector("#summaryTitle"),
+      brandTitle: document.querySelector("#brandTitle"),
+      navMeta: document.querySelector("#navMeta"),
+      heroEyebrow: document.querySelector("#heroEyebrow"),
+      heroTitle: document.querySelector("#heroTitle"),
+      heroDescription: document.querySelector("#heroDescription"),
+      statTotalLabel: document.querySelector("#statTotalLabel"),
+      statLikesLabel: document.querySelector("#statLikesLabel"),
+      statTopLabel: document.querySelector("#statTopLabel"),
+      statRegionLabel: document.querySelector("#statRegionLabel"),
+      daySectionTitle: document.querySelector("#daySectionTitle"),
+      regionSectionTitle: document.querySelector("#regionSectionTitle"),
+      regionChips: document.querySelector("#regionChips"),
+      trendGrid: document.querySelector("#trendGrid"),
+      statTotal: document.querySelector("#statTotal"),
+      statLikes: document.querySelector("#statLikes"),
+      statTop: document.querySelector("#statTop"),
+      statDate: document.querySelector("#statDate")
+    };
+
+    function getActiveDay() {
+      return reportDays.find((day) => day.id === activeDayId) || reportDays[0] || { materials: [], regionSummaries: [] };
+    }
+
+    function metaText(key, fallback = "") {
+      return Object.prototype.hasOwnProperty.call(pageMeta, key) ? pageMeta[key] : fallback;
+    }
+
+    function applyText(element, value) {
+      if (!element) return;
+      const text = value == null ? "" : String(value);
+      element.textContent = text;
+      element.hidden = text.trim() === "";
+    }
+
+    function applyPageMeta() {
+      const siteTitle = metaText("siteTitle");
+      if (siteTitle.trim()) document.title = siteTitle;
+      applyText(els.brandTitle, metaText("brandTitle", siteTitle));
+      applyText(els.navMeta, metaText("navMeta"));
+      applyText(els.heroEyebrow, metaText("eyebrow"));
+      applyText(els.heroTitle, metaText("heroTitle", siteTitle));
+      applyText(els.heroDescription, metaText("heroDescription"));
+      applyText(els.statTotalLabel, metaText("statTotalLabel"));
+      applyText(els.statLikesLabel, metaText("statLikesLabel"));
+      applyText(els.statTopLabel, metaText("statTopLabel"));
+      applyText(els.statRegionLabel, metaText("statRegionLabel"));
+      applyText(els.daySectionTitle, metaText("daySectionTitle"));
+      applyText(els.summaryTitle, metaText("trendSectionTitle"));
+      applyText(els.regionSectionTitle, metaText("regionSectionTitle"));
+      els.search.placeholder = metaText("searchPlaceholder");
+    }
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat("zh-CN").format(value);
+    }
+
+    function resetSelect(select, label, options) {
+      const current = select.value;
+      select.innerHTML = "";
+      const allOption = document.createElement("option");
+      allOption.value = "all";
+      allOption.textContent = label;
+      select.append(allOption);
+
+      options.forEach((value) => {
+        const option = document.createElement("option");
+        option.value = value;
+        option.textContent = value;
+        select.append(option);
+      });
+
+      select.value = options.includes(current) ? current : "all";
+    }
+
+    function populateFilters() {
+      const day = getActiveDay();
+      const categories = [...new Set(day.materials.map((item) => item.category))].sort();
+      const tags = [...new Set(day.materials.flatMap((item) => item.tags))].sort();
+      resetSelect(els.category, "全部类型", categories);
+      resetSelect(els.tag, "全部标签", tags);
+    }
+
+    function updateStats() {
+      const day = getActiveDay();
+      const totalLikes = day.materials.reduce((sum, item) => sum + item.likes, 0);
+      const topLikes = Math.max(...day.materials.map((item) => item.likes));
+      const regionCount = new Set(day.materials.map((item) => item.region)).size;
+
+      els.statTotal.textContent = formatNumber(day.materials.length);
+      els.statLikes.textContent = formatNumber(totalLikes);
+      els.statTop.textContent = formatNumber(topLikes);
+      els.statDate.textContent = `${regionCount} 个`;
+      els.dayMeta.textContent = `当前周期：${day.label} · ${day.rangeLabel} · ${day.materials.length} 条素材 · ${regionCount} 个区域`;
+    }
+
+    function getFilteredMaterials() {
+      const day = getActiveDay();
+      const keyword = els.search.value.trim().toLowerCase();
+      const category = els.category.value;
+      const tag = els.tag.value;
+      const sort = els.sort.value;
+
+      const filtered = day.materials.filter((item) => {
+        const haystack = [
+          item.title,
+          item.region,
+          item.category,
+          item.analysis,
+          item.caption,
+          item.url,
+          ...item.tags
+        ]
+          .join(" ")
+          .toLowerCase();
+
+        const keywordMatched = !keyword || haystack.includes(keyword);
+        const regionMatched = selectedRegion === "all" || item.region === selectedRegion;
+        const categoryMatched = category === "all" || item.category === category;
+        const tagMatched = tag === "all" || item.tags.includes(tag);
+
+        return keywordMatched && regionMatched && categoryMatched && tagMatched;
+      });
+
+      return filtered.sort((a, b) => {
+        if (selectedRegion === "all") {
+          return a.id - b.id;
+        }
+        if (sort === "date-desc") {
+          return b.publishDate.localeCompare(a.publishDate) || b.likes - a.likes;
+        }
+        if (sort === "rank-asc") {
+          return (a.localRank - b.localRank) || (a.id - b.id);
+        }
+        return b.likes - a.likes;
+      });
+    }
+
+    function showToast(text) {
+      els.toast.textContent = text;
+      els.toast.classList.add("show");
+      window.setTimeout(() => els.toast.classList.remove("show"), 1600);
+    }
+
+    async function copyLink(url) {
+      if (!url) {
+        showToast("这条素材还没有填写链接");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(url);
+        showToast("已复制链接");
+      } catch {
+        showToast("浏览器不允许自动复制，请手动复制");
+      }
+    }
+
+    function createMetric(text) {
+      const node = document.createElement("span");
+      node.className = "metric";
+      node.textContent = text;
+      return node;
+    }
+
+    function renderDayTabs() {
+      els.dayTabs.innerHTML = "";
+      reportDays.forEach((day) => {
+        const button = document.createElement("button");
+        button.className = `day-chip${activeDayId === day.id ? " is-active" : ""}`;
+        button.type = "button";
+        const note = day.note ? `<span>${escapeHtml(day.note)}</span>` : "";
+        button.innerHTML = `<strong>${escapeHtml(day.label)}</strong><span>${escapeHtml(day.rangeLabel)} · ${day.materials.length} 条</span>${note}`;
+        button.addEventListener("click", () => {
+          activeDayId = day.id;
+          selectedRegion = "all";
+          els.search.value = "";
+          els.category.value = "all";
+          els.tag.value = "all";
+          renderPage({ repopulateFilters: true });
+        });
+        els.dayTabs.append(button);
+      });
+    }
+
+    const keywordDictionary = [
+      "体育赛事", "足球世界杯", "球迷反应", "赛事二创", "饭制剪辑", "宗教信仰", "宗教文化", "情感共鸣", "情绪宣泄", "家庭日常",
+      "生活记录", "Vlog", "真实感", "街头互动", "街头采访", "本土认同", "民族认同", "爱国主义", "国旗符号", "传统服饰",
+      "文化碰撞", "AI生成", "图文动画", "反差冲突", "剧情反转", "视觉奇观", "数据可视化", "极端天气", "热浪话题", "舞蹈挑战",
+      "女团舞", "Kpop舞蹈", "Meme文化", "搞笑剧情", "恶搞整蛊", "治愈解压", "ASMR", "收纳清洁", "第一人称", "前3秒钩子",
+      "快节奏剪辑", "一镜到底", "高饱和视觉", "魔性BGM", "评论互动", "社会议题", "政治议题", "情感金句", "家庭伦理", "逆袭复仇",
+      "亲子互动", "宠物萌宠", "美食制作", "旅行风光", "校园青春", "职场压力", "阶级冲突", "新闻事件", "公益正能量", "人物采访",
+      "农村生活", "田间劳作", "口播叙事", "诗歌口播", "乌尔都语", "阿拉伯语", "土耳其语", "日语口播", "韩流文化", "流行挑战",
+      "粉丝文化", "生活吐槽", "情绪反差", "视觉冲突", "强悬念", "真实记录", "人物反差", "热点事件", "本土幽默", "年轻化表达"
+    ];
+
+    const regionKeywordFallbacks = {
+      "中东": ["体育赛事", "宗教信仰", "情感共鸣", "家庭日常", "街头互动", "阿拉伯语", "本土认同", "快节奏剪辑", "反转笑点", "真实记录"],
+      "土耳其": ["足球世界杯", "球迷反应", "赛事二创", "爱国主义", "Meme文化", "本土幽默", "情绪宣泄", "国旗符号", "快节奏剪辑", "旅行风光"],
+      "欧洲": ["AI生成", "文化碰撞", "极端天气", "热浪话题", "反差冲突", "视觉奇观", "剧情反转", "本土幽默", "数据可视化", "情绪释放"],
+      "巴基斯坦": ["宗教文化", "爱国主义", "社会议题", "情感共鸣", "诗歌口播", "乌尔都语", "家庭场景", "政治议题", "图文动画", "真实记录"],
+      "日本": ["真实感", "治愈解压", "生活记录", "强反差", "ASMR", "收纳清洁", "日语口播", "前3秒钩子", "情绪闭环", "无厘头搞笑"],
+      "韩国": ["Kpop舞蹈", "女团舞", "情绪反差", "视觉冲突", "职场压力", "阶级冲突", "魔性BGM", "一镜到底", "韩流文化", "强悬念"]
+    };
+
+    function getRegionKeywords(day, summaryItem) {
+      if (Array.isArray(summaryItem.keywords) && summaryItem.keywords.length) {
+        return summaryItem.keywords.slice(0, 10);
+      }
+
+      const relatedMaterials = day.materials.filter((material) => material.region === summaryItem.region);
+      const corpus = [
+        summaryItem.region,
+        summaryItem.topic,
+        summaryItem.summary,
+        ...relatedMaterials.flatMap((material) => [
+          material.title,
+          material.category,
+          material.analysis,
+          material.caption,
+          ...(material.tags || [])
+        ])
+      ].join(" ").toLowerCase();
+
+      const picked = [];
+      keywordDictionary.forEach((keyword) => {
+        if (picked.length >= 10) return;
+        if (corpus.includes(keyword.toLowerCase())) {
+          picked.push(keyword);
+        }
+      });
+
+      const fallback = regionKeywordFallbacks[summaryItem.region] || ["热点事件", "真实感", "情感共鸣", "前3秒钩子", "快节奏剪辑", "反差冲突", "互动讨论", "本土表达", "视觉冲击", "情绪释放"];
+      fallback.forEach((keyword) => {
+        if (picked.length < 10 && !picked.includes(keyword)) {
+          picked.push(keyword);
+        }
+      });
+
+      return picked.slice(0, 10);
+    }
+
+    function renderRegionSummaries() {
+      const day = getActiveDay();
+      els.summaryTitle.textContent = `${day.label} 区域趋势总结`;
+      els.trendGrid.innerHTML = "";
+
+      day.regionSummaries.forEach((item) => {
+        const article = document.createElement("article");
+        article.className = "trend-item";
+        const keywordHtml = getRegionKeywords(day, item)
+          .map((keyword) => `<span class="trend-keyword">${escapeHtml(keyword)}</span>`)
+          .join("");
+        article.innerHTML = `
+          <strong><span class="region-name">${escapeHtml(item.region)}</span> · ${escapeHtml(item.topic)}</strong>
+          <div class="trend-keywords"><b>关键词：</b>${keywordHtml}</div>
+          <p>${escapeHtml(item.summary)}</p>
+        `;
+        els.trendGrid.append(article);
+      });
+    }
+
+    function renderRegionButtons() {
+      const day = getActiveDay();
+      els.regionChips.innerHTML = "";
+
+      const allButton = document.createElement("button");
+      allButton.className = `region-chip${selectedRegion === "all" ? " is-active" : ""}`;
+      allButton.type = "button";
+      allButton.textContent = "全部区域";
+      allButton.addEventListener("click", () => {
+        selectedRegion = "all";
+        renderPage();
+      });
+      els.regionChips.append(allButton);
+
+      day.regionSummaries.forEach((item) => {
+        const chip = document.createElement("button");
+        chip.className = `region-chip${selectedRegion === item.region ? " is-active" : ""}`;
+        chip.type = "button";
+        chip.textContent = `${item.region} · ${item.itemCount} 条`;
+        chip.addEventListener("click", () => {
+          selectedRegion = item.region;
+          renderPage();
+        });
+        els.regionChips.append(chip);
+      });
+    }
+
+    function getTikTokVideoId(url) {
+      return url.match(/\/video\/(\d+)/)?.[1] || "";
+    }
+
+    function createVideoEmbed(item) {
+      const videoId = getTikTokVideoId(item.url);
+      const wrapper = document.createElement("div");
+
+      if (!item.url || !videoId) {
+        wrapper.className = "video-fallback";
+        wrapper.innerHTML = `
+          <strong>暂无视频预览</strong>
+          <p>这条素材还没有可嵌入的 TikTok 链接。</p>
+        `;
+        return wrapper;
+      }
+
+      const iframe = document.createElement("iframe");
+      iframe.className = "tiktok-iframe";
+      iframe.title = item.title;
+      iframe.loading = "lazy";
+      iframe.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      const playToken = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+      iframe.src = `https://www.tiktok.com/embed/v2/${videoId}?autoplay=1&muted=1&loop=1&theme=dark&playsinline=1&ts=${playToken}`;
+      return iframe;
+    }
+
+    function createVideoOverlay(item) {
+      const overlay = document.createElement("div");
+      overlay.className = "video-overlay";
+
+      const tagHtml = item.tags
+        .slice(0, 4)
+        .map((tag) => `<span class="overlay-pill">${escapeHtml(tag)}</span>`)
+        .join("");
+
+      overlay.innerHTML = `
+        <div class="overlay-content">
+          <div class="overlay-kicker">
+            <span>${escapeHtml(item.region)} · ${escapeHtml(item.category)}</span>
+            <span class="overlay-rank">${String(item.id).padStart(2, "0")}</span>
+          </div>
+          <h3 class="overlay-title">${escapeHtml(item.title)}</h3>
+          <div class="overlay-metrics">
+            <span class="overlay-pill">区域第 ${item.localRank} 条</span>
+            <span class="overlay-pill">${formatNumber(item.likes)} 点赞</span>
+            <span class="overlay-pill">${escapeHtml(item.publishDate)}</span>
+          </div>
+          <div class="overlay-tags">${tagHtml}</div>
+          <div class="overlay-analysis"><strong>对视频的解析：</strong>${escapeHtml(item.analysis)}</div>
+        </div>
+        <div class="overlay-hint">
+          <span class="overlay-play-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M8 5.6v12.8c0 .8.9 1.3 1.6.9l10-6.4c.6-.4.6-1.3 0-1.7l-10-6.4c-.7-.4-1.6.1-1.6.8Z"></path>
+            </svg>
+          </span>
+          <img src="./assets/tiktok-watermark.png" alt="" aria-hidden="true">
+          <span>鼠标悬停从头加载并播放，移开即停止</span>
+        </div>
+      `;
+      return overlay;
+    }
+
+    const playbackTimers = new WeakMap();
+
+    function setCardPlayback(article, item, shouldPlay) {
+      const videoFrame = article.querySelector(".video-frame");
+      if (!videoFrame || !item.url) return;
+
+      const pendingTimer = playbackTimers.get(article);
+      if (pendingTimer) {
+        window.clearTimeout(pendingTimer);
+        playbackTimers.delete(article);
+      }
+
+      const resetPlayer = () => {
+        videoFrame.querySelectorAll(".tiktok-iframe").forEach((iframe) => {
+          iframe.src = "about:blank";
+          iframe.remove();
+        });
+        videoFrame.querySelectorAll(".video-fallback").forEach((node) => node.remove());
+      };
+
+      if (shouldPlay) {
+        resetPlayer();
+        article.classList.add("is-playing");
+        const timer = window.setTimeout(() => {
+          playbackTimers.delete(article);
+          if (!article.classList.contains("is-playing")) return;
+          videoFrame.append(createVideoEmbed(item));
+        }, 40);
+        playbackTimers.set(article, timer);
+      } else {
+        resetPlayer();
+        article.classList.remove("is-playing");
+      }
+    }
+
+    function renderCards() {
+      const items = getFilteredMaterials();
+      els.list.innerHTML = "";
+      els.empty.style.display = items.length ? "none" : "block";
+
+      items.forEach((item) => {
+        const fragment = els.template.content.cloneNode(true);
+        const article = fragment.querySelector(".card");
+        const rank = fragment.querySelector(".rank");
+        const category = fragment.querySelector(".category");
+        const title = fragment.querySelector("h2");
+        const metrics = fragment.querySelector(".metrics");
+        const tags = fragment.querySelector(".tags");
+        const analysis = fragment.querySelector(".analysis");
+        const caption = fragment.querySelector(".caption");
+        const actions = fragment.querySelector(".actions");
+        const videoFrame = fragment.querySelector(".video-frame");
+
+        article.dataset.id = `${activeDayId}-${item.id}`;
+        rank.textContent = String(item.id).padStart(2, "0");
+        category.textContent = `${item.region} · ${item.category}`;
+        title.textContent = item.title;
+        metrics.append(
+          createMetric(`区域第 ${item.localRank} 条`),
+          createMetric(`${formatNumber(item.likes)} 点赞`),
+          createMetric(item.publishDate)
+        );
+
+        item.tags.forEach((tag) => {
+          const node = document.createElement("span");
+          node.className = "tag";
+          node.textContent = tag;
+          tags.append(node);
+        });
+
+        analysis.innerHTML = `<strong>对视频的解析：</strong>${escapeHtml(item.analysis)}`;
+        caption.innerHTML = `<strong>该条视频原文：</strong>${escapeHtml(item.caption)}`;
+        videoFrame.append(createVideoOverlay(item));
+
+        const replayButton = document.createElement("button");
+        replayButton.className = "replay-button";
+        replayButton.type = "button";
+        replayButton.textContent = "重新加载播放";
+        replayButton.addEventListener("click", (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          setCardPlayback(article, item, true);
+        });
+        videoFrame.append(replayButton);
+
+        article.addEventListener("mouseenter", () => setCardPlayback(article, item, true));
+        article.addEventListener("mouseleave", () => setCardPlayback(article, item, false));
+        article.addEventListener("focusin", () => setCardPlayback(article, item, true));
+        article.addEventListener("focusout", () => setCardPlayback(article, item, false));
+
+        const openLink = document.createElement("a");
+        openLink.className = "btn btn-primary";
+        openLink.target = "_blank";
+        openLink.rel = "noreferrer";
+        openLink.href = item.url || "#";
+        openLink.textContent = item.url ? "打开原视频" : "待补充链接";
+        if (!item.url) {
+          openLink.addEventListener("click", (event) => event.preventDefault());
+        }
+
+        const copyButton = document.createElement("button");
+        copyButton.className = "btn btn-ghost";
+        copyButton.type = "button";
+        copyButton.textContent = "复制链接";
+        copyButton.addEventListener("click", () => copyLink(item.url));
+
+        actions.append(openLink, copyButton);
+        els.list.append(fragment);
+      });
+
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement("div");
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function renderPage(options = {}) {
+      if (options.repopulateFilters) populateFilters();
+      renderDayTabs();
+      updateStats();
+      renderRegionSummaries();
+      renderRegionButtons();
+      renderCards();
+    }
+
+    [els.search, els.category, els.tag, els.sort].forEach((control) => {
+      control.addEventListener("input", renderPage);
+    });
+
+    applyPageMeta();
+    populateFilters();
+    renderPage();
+  </script>
+</body>
+</html>
